@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Age Calculator</title>
+</head>
+
+<body>
+  <div class="Agecalculator">
+    <h1>AGE CALCULATOR</h1>
+    <input type="date" id="birthdate" style="font-size: 20px; padding: 10px;">
+    <br><br>
+    <input type="button" class="btn" value="Calculate Age" onclick="calculateAge()" style="font-size: 20px; padding: 10px;">
+    <p id="result"></p>
+  </div>
+
+  <script>
+    
+function calculateAge() {
+  var birthdate = document.getElementById("birthdate").value;
+
+  if (birthdate === "") {
+    document.getElementById("result").innerHTML = "Error: Please enter a valid date.";
+    return;
+  }
+
+  var birthdateArray = birthdate.split("-");
+  var birthYear = birthdateArray[0];
+  var birthMonth = birthdateArray[1];
+  var birthDay = birthdateArray[2];
+
+  if (isNaN(birthYear) || isNaN(birthMonth) || isNaN(birthDay)) {
+    document.getElementById("result").innerHTML = "Error: Invalid date format. Please use YYYY-MM-DD.";
+    return;
+  }
+
+  var today = new Date();
+  var ageYears = today.getFullYear() - birthYear;
+  var ageMonths = today.getMonth() - (birthMonth - 1);
+  var ageDays = today.getDate() - birthDay;
+
+  if (ageDays < 0) {
+    ageDays += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    ageMonths--;
+  }
+
+  if (ageMonths < 0) {
+    ageMonths += 12;
+    ageYears--;
+  }
+
+  document.getElementById("result").innerHTML = "Your age is: " + ageYears + " years, " + ageMonths + " months, and " + ageDays + " days old.";
+}
+  </script>
+</body>
+
+</html>
